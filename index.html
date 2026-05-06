@@ -1,0 +1,2861 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5月超级AI大航海 · 开船仪式</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+  :root {
+    --bg-0: #020817;
+    --bg-1: #07162f;
+    --bg-2: #0d2a4f;
+    --ink: #ecf6ff;
+    --muted: #9cb6cb;
+    --soft: #6b879f;
+    --line: rgba(120, 190, 230, 0.16);
+    --panel: rgba(8, 20, 38, 0.62);
+    --panel-strong: rgba(7, 18, 34, 0.78);
+    --accent: #59d2f4;
+    --accent-2: #f1bd67;
+    --accent-3: #2ad4b3;
+    --danger: #f26b6b;
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-0); }
+  body {
+    font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(circle at top left, rgba(89,210,244,0.12), transparent 28%),
+      radial-gradient(circle at 82% 12%, rgba(241,189,103,0.10), transparent 24%),
+      linear-gradient(145deg, #020817 0%, #07162f 44%, #0a2140 100%);
+  }
+
+  .slide {
+    width: 100vw; height: 100vh;
+    position: absolute; top: 0; left: 0;
+    display: none; flex-direction: column;
+    justify-content: center; align-items: center; padding: 0 8.5%;
+    background:
+      linear-gradient(145deg, rgba(2,8,23,0.96) 0%, rgba(7,22,47,0.94) 42%, rgba(10,33,64,0.96) 100%);
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .slide.active { display: flex; opacity: 1; }
+  .slide.fade-out { opacity: 0; }
+
+  .slide::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 82% 58% at 14% 86%, rgba(18,96,168,0.22), transparent 60%),
+      radial-gradient(ellipse 48% 34% at 84% 14%, rgba(89,210,244,0.12), transparent 52%),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 100%);
+    background-size: auto, auto, 120px 120px;
+  }
+  .slide::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(circle at 10% 14%, rgba(89,210,244,0.16), transparent 0 14%),
+      radial-gradient(circle at 92% 82%, rgba(241,189,103,0.14), transparent 0 11%);
+    opacity: 0.9;
+  }
+
+  @keyframes float-particle {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+    25% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+    50% { transform: translateY(-10px) translateX(-5px); opacity: 0.4; }
+    75% { transform: translateY(-30px) translateX(15px); opacity: 0.5; }
+  }
+
+  .content {
+    position: relative; z-index: 1;
+    width: min(1240px, 100%);
+    margin: 0 auto; text-align: center;
+  }
+  .content > * { position: relative; z-index: 1; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(79,195,227,0.3); }
+    50% { box-shadow: 0 0 20px rgba(79,195,227,0.6); }
+  }
+
+  .slide.active .tag { animation: fadeUp 0.5s ease both; animation-delay: 0.1s; }
+  .slide.active h1 { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
+  .slide.active h2 { animation: fadeUp 0.6s ease both; animation-delay: 0.25s; }
+  .slide.active .subtitle { animation: fadeUp 0.5s ease both; animation-delay: 0.35s; }
+  .slide.active .highlight-box { animation: scaleIn 0.5s ease both; animation-delay: 0.4s; }
+  .slide.active .item:nth-child(1) { animation: fadeLeft 0.5s ease both; animation-delay: 0.3s; }
+  .slide.active .item:nth-child(2) { animation: fadeLeft 0.5s ease both; animation-delay: 0.4s; }
+  .slide.active .item:nth-child(3) { animation: fadeLeft 0.5s ease both; animation-delay: 0.5s; }
+  .slide.active .item:nth-child(4) { animation: fadeLeft 0.5s ease both; animation-delay: 0.6s; }
+  .slide.active .item:nth-child(5) { animation: fadeLeft 0.5s ease both; animation-delay: 0.7s; }
+  .slide.active .cards { animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+  .slide.active .card:nth-child(1) { animation: scaleIn 0.4s ease both; animation-delay: 0.3s; }
+  .slide.active .card:nth-child(2) { animation: scaleIn 0.4s ease both; animation-delay: 0.4s; }
+  .slide.active .card:nth-child(3) { animation: scaleIn 0.4s ease both; animation-delay: 0.5s; }
+  .slide.active .card:nth-child(4) { animation: scaleIn 0.4s ease both; animation-delay: 0.6s; }
+  .slide.active .card:nth-child(5) { animation: scaleIn 0.4s ease both; animation-delay: 0.7s; }
+  .slide.active .card:nth-child(6) { animation: scaleIn 0.4s ease both; animation-delay: 0.8s; }
+  .slide.active .timeline { animation: fadeUp 0.6s ease both; animation-delay: 0.3s; }
+  .slide.active .tl-dot { animation: glowPulse 2s ease-in-out infinite; }
+  .slide.active .two-col > :first-child { animation: fadeLeft 0.5s ease both; animation-delay: 0.3s; }
+  .slide.active .two-col > :last-child { animation: fadeRight 0.5s ease both; animation-delay: 0.4s; }
+  .slide.active .feature-card:nth-child(1) { animation: scaleIn 0.4s ease both; animation-delay: 0.3s; }
+  .slide.active .feature-card:nth-child(2) { animation: scaleIn 0.4s ease both; animation-delay: 0.4s; }
+  .slide.active .feature-card:nth-child(3) { animation: scaleIn 0.4s ease both; animation-delay: 0.5s; }
+  .slide.active .feature-card:nth-child(4) { animation: scaleIn 0.4s ease both; animation-delay: 0.6s; }
+
+  /* Typography */
+  .tag {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 18px; border: 1px solid rgba(89,210,244,0.24);
+    border-radius: 999px; background: rgba(8,20,38,0.4);
+    backdrop-filter: blur(10px); font-size: 13px;
+    letter-spacing: 0.24em; color: var(--accent);
+    margin-bottom: 24px; font-weight: 700;
+  }
+  h1 { font-size: 78px; font-weight: 900; line-height: 1.14; margin-bottom: 28px; letter-spacing: -0.03em; }
+  h1 .accent { color: var(--accent); }
+  h2 { font-size: 54px; font-weight: 900; line-height: 1.2; margin-bottom: 34px; letter-spacing: -0.03em; }
+  h2 .accent { color: var(--accent); }
+  .subtitle { font-size: 24px; color: var(--muted); line-height: 1.9; max-width: 1000px; margin-left: auto; margin-right: auto; }
+  .subtitle .hl { color: var(--accent); font-weight: 700; }
+
+  /* Lists */
+  .items { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; align-items: center; }
+  .item { display: flex; align-items: flex-start; justify-content: center; gap: 16px; font-size: 22px; line-height: 1.86; color: #d2e4f3; max-width: 980px; text-align: center; }
+  .item .num {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(89,210,244,0.14); border: 1px solid rgba(89,210,244,0.28);
+    color: var(--accent); font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .item .dot {
+    flex-shrink: 0; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent); margin-top: 14px;
+    box-shadow: 0 0 18px rgba(89,210,244,0.42);
+  }
+  .item .dot.gold { background: var(--accent-2); box-shadow: 0 0 18px rgba(241,189,103,0.36); }
+  .item .dot.red { background: var(--danger); box-shadow: 0 0 18px rgba(242,107,107,0.3); }
+  .item .dot.green { background: var(--accent-3); box-shadow: 0 0 18px rgba(42,212,179,0.34); }
+  .item strong { color: var(--ink); font-weight: 700; }
+
+  /* Cards grid */
+  .cards { display: grid; gap: 28px; margin-top: 42px; }
+  .cards-6 { grid-template-columns: repeat(3, 1fr); }
+  .cards-5 { grid-template-columns: repeat(5, 1fr); }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+  .card {
+    background: linear-gradient(180deg, rgba(12,27,49,0.86) 0%, rgba(7,18,34,0.72) 100%);
+    border: 1px solid var(--line); border-radius: 22px;
+    padding: 34px 30px; backdrop-filter: blur(16px);
+    box-shadow: var(--shadow); transition: all 0.3s ease; text-align: center;
+  }
+  .card:hover {
+    border-color: rgba(89,210,244,0.35);
+    box-shadow: 0 0 24px rgba(89,210,244,0.08), 0 20px 40px rgba(0,0,0,0.24);
+    transform: translateY(-3px);
+  }
+  .card-icon { font-size: 36px; margin-bottom: 16px; color: var(--accent); }
+  .card-title { font-size: 22px; font-weight: 900; color: var(--accent); margin-bottom: 18px; }
+  .card-body { font-size: 17px; color: var(--muted); line-height: 2; }
+  .card-body strong { color: var(--ink); }
+
+  /* Highlight box */
+  .highlight-box {
+    margin-top: 42px; padding: 36px 40px; border-radius: 22px;
+    background: linear-gradient(180deg, rgba(89,210,244,0.10) 0%, rgba(14,31,56,0.62) 100%);
+    border: 1px solid rgba(89,210,244,0.24);
+    font-size: 24px; color: var(--ink); line-height: 1.9; font-weight: 700;
+    text-align: center; box-shadow: var(--shadow);
+  }
+
+  /* Calendar */
+  .calendar {
+    margin-top: 44px; padding: 30px;
+    border: 1px solid var(--line); border-radius: 24px;
+    background: linear-gradient(180deg, rgba(10,24,45,0.76) 0%, rgba(7,18,34,0.68) 100%);
+    box-shadow: var(--shadow);
+  }
+  .calendar-month {
+    display: inline-flex; align-items: baseline; gap: 12px;
+    margin-top: 8px; padding: 10px 18px; border-radius: 999px;
+    border: 1px solid rgba(89,210,244,0.16); background: rgba(8,20,38,0.34);
+  }
+  .calendar-month .month-cn { font-size: 30px; font-weight: 800; color: var(--ink); }
+  .calendar-month .month-en { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: var(--accent); }
+  .calendar-head {
+    display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 14px; margin-bottom: 16px;
+  }
+  .calendar-weekday {
+    padding: 12px 0; font-size: 14px; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--soft); text-align: center;
+  }
+  .calendar-grid {
+    display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px;
+  }
+  .calendar-day {
+    min-height: 110px; padding: 16px 14px; border-radius: 18px;
+    border: 1px solid rgba(120, 190, 230, 0.1);
+    background: rgba(9, 21, 39, 0.46); text-align: left;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .calendar-day.empty { background: rgba(255,255,255,0.02); border-style: dashed; border-color: rgba(120,190,230,0.06); }
+  .calendar-day.is-event { background: linear-gradient(180deg, rgba(14,31,56,0.88) 0%, rgba(9,21,39,0.78) 100%); border-color: rgba(89,210,244,0.18); }
+  .calendar-day.is-key { border-color: rgba(241,189,103,0.34); box-shadow: inset 0 0 0 1px rgba(241,189,103,0.12); }
+  .calendar-date { font-size: 20px; font-weight: 800; color: var(--ink); }
+  .calendar-day.is-event .calendar-date { color: var(--accent); }
+  .calendar-day.is-key .calendar-date { color: var(--accent-2); }
+  .calendar-event {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; line-height: 1.6; color: var(--muted);
+  }
+  .calendar-event::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0; background: var(--accent);
+    box-shadow: 0 0 12px rgba(89,210,244,0.42);
+  }
+  .calendar-day.is-key .calendar-event::before {
+    background: var(--accent-2); box-shadow: 0 0 12px rgba(241,189,103,0.36);
+  }
+
+  /* Voyage calendar */
+  .voyage-calendar-wrap {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 28px;
+    border: 1px solid rgba(89,210,244,0.2);
+    background:
+      radial-gradient(circle at top right, rgba(89,210,244,0.12), transparent 28%),
+      linear-gradient(180deg, rgba(8,20,38,0.82) 0%, rgba(6,16,30,0.72) 100%);
+    box-shadow: var(--shadow);
+  }
+  .voyage-toolbar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .voyage-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(89,210,244,0.18);
+    background: rgba(9,21,39,0.52);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .voyage-pill::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(89,210,244,0.4);
+  }
+  .voyage-pill.is-gold::before {
+    background: var(--accent-2);
+    box-shadow: 0 0 12px rgba(241,189,103,0.35);
+  }
+  .voyage-pill.is-green::before {
+    background: #31a51f;
+    box-shadow: 0 0 12px rgba(49,165,31,0.35);
+  }
+  .voyage-calendar {
+    overflow: hidden;
+    border-radius: 22px;
+    background: #f8fbff;
+    color: #122033;
+  }
+  .voyage-calendar-month {
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #0f6d61 0%, #137667 100%);
+    color: #fff;
+    font-size: 28px;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 0.08em;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.22);
+  }
+  .voyage-weekdays,
+  .voyage-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+  .voyage-weekday {
+    padding: 12px 8px 10px;
+    background: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+    color: #4d7dff;
+    border-bottom: 1px solid #e7edf5;
+  }
+  .voyage-weekday.weekend {
+    color: #e55353;
+  }
+  .voyage-cell {
+    min-height: 110px;
+    background: #ffffff;
+    border-right: 1px solid #e7edf5;
+    border-bottom: 1px solid #e7edf5;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .voyage-cell:nth-child(7n) {
+    border-right: none;
+  }
+  .voyage-cell.empty {
+    background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(245,249,253,0.98) 100%);
+  }
+  .voyage-cell.weekend {
+    background: linear-gradient(180deg, #ffffff 0%, #fcfdff 100%);
+  }
+  .voyage-cell.milestone {
+    box-shadow: inset 0 0 0 2px rgba(49,165,31,0.14);
+  }
+  .voyage-date {
+    min-height: 36px;
+    padding: 8px 12px 6px;
+    background: #f3f5f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 18px;
+    font-weight: 900;
+    color: #1f2430;
+  }
+  .voyage-cell.weekend .voyage-date,
+  .voyage-cell.holiday .voyage-date {
+    color: #ea4d4d;
+  }
+  .voyage-rest,
+  .voyage-work {
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .voyage-body {
+    flex: 1;
+    padding: 8px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .voyage-note {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 0;
+    background: #cfefff;
+    font-size: 12px;
+    font-weight: 700;
+    color: #213547;
+    text-align: center;
+  }
+  .voyage-day-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    margin-top: 2px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: rgba(13,33,64,0.06);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #223247;
+  }
+  .voyage-event {
+    width: calc(100% - 8px);
+    padding: 7px 10px;
+    border-radius: 10px;
+    background: #fff3d7;
+    font-size: 12px;
+    font-weight: 800;
+    color: #ef7247;
+    text-align: center;
+    box-shadow: inset 0 0 0 1px rgba(241,189,103,0.18);
+  }
+  .voyage-event.ceremony {
+    background: linear-gradient(180deg, #fff5dc 0%, #ffeebd 100%);
+    color: #ef6a3e;
+  }
+  .voyage-event.coach {
+    width: auto;
+    min-width: 128px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background: #fff2c9;
+  }
+  .voyage-event.arrival {
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    border-radius: 0;
+    background: #31a51f;
+    color: #ffffff;
+    font-size: 18px;
+    box-shadow: none;
+  }
+  .voyage-footnote {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    text-align: center;
+  }
+  #s4 {
+    justify-content: flex-start;
+    padding-top: 58px;
+    padding-bottom: 34px;
+  }
+  #s4 .content {
+    width: min(1320px, 100%);
+  }
+  #s4 h2 {
+    margin-bottom: 20px;
+  }
+  #s4 .tag {
+    margin-bottom: 16px;
+  }
+
+  /* Two column */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 42px; }
+
+  /* Feature grid */
+  .feature-grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px; margin-top: 42px;
+  }
+  .feature-card {
+    padding: 30px 26px 32px; border-radius: 20px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(12,27,49,0.86) 0%, rgba(7,18,34,0.74) 100%);
+    box-shadow: var(--shadow); text-align: center;
+    transition: all 0.3s ease;
+  }
+  .feature-card:hover {
+    border-color: rgba(89,210,244,0.35);
+    transform: translateY(-3px);
+  }
+  .feature-no {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(89,210,244,0.12); border: 1px solid rgba(89,210,244,0.22);
+    color: var(--accent); font-weight: 800; margin-bottom: 18px;
+  }
+  .feature-card h3 { font-size: 22px; line-height: 1.45; margin-bottom: 12px; color: var(--ink); }
+  .feature-card p { color: var(--muted); font-size: 16px; line-height: 1.9; }
+
+  /* Panel */
+  .panel {
+    border-radius: 22px; border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(12,27,49,0.86) 0%, rgba(7,18,34,0.74) 100%);
+    box-shadow: var(--shadow); padding: 34px 34px 30px; text-align: center;
+  }
+  .panel.gold { border-color: rgba(241,189,103,0.22); background: linear-gradient(180deg, rgba(42,33,16,0.54) 0%, rgba(7,18,34,0.76) 100%); }
+  .panel.danger { border-color: rgba(242,107,107,0.22); background: linear-gradient(180deg, rgba(42,16,16,0.54) 0%, rgba(7,18,34,0.76) 100%); }
+  .panel h3 { font-size: 26px; line-height: 1.45; margin-bottom: 14px; color: var(--ink); }
+  .panel p { color: var(--muted); font-size: 17px; line-height: 2; }
+
+  /* Event strip */
+  .event-strip {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px; margin-top: 42px;
+  }
+  .event-card {
+    min-height: 180px; padding: 28px 22px; border-radius: 18px;
+    border: 1px solid rgba(89,210,244,0.18);
+    background: linear-gradient(180deg, rgba(14,31,56,0.55) 0%, rgba(7,18,34,0.76) 100%);
+    box-shadow: var(--shadow); text-align: center;
+    transition: all 0.3s ease;
+  }
+  .event-card:hover { transform: translateY(-3px); border-color: rgba(89,210,244,0.35); }
+  .event-date { font-size: 30px; font-weight: 900; color: var(--accent); margin-bottom: 10px; }
+  .event-title { font-size: 18px; color: var(--ink); font-weight: 700; margin-bottom: 10px; }
+  .event-body { font-size: 15px; color: var(--muted); line-height: 1.8; }
+
+  /* Closing */
+  .closing-mark {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-top: 52px; padding: 14px 22px; border-radius: 999px;
+    background: rgba(241,189,103,0.12); border: 1px solid rgba(241,189,103,0.22);
+    color: var(--accent-2); font-size: 18px; font-weight: 700;
+  }
+
+  /* Page indicator */
+  .page-ind {
+    position: fixed; bottom: 28px; right: 40px; z-index: 100;
+    font-size: 13px; color: rgba(255,255,255,0.42); letter-spacing: 0.1em;
+  }
+
+  /* Center slide */
+  .slide.center { align-items: center; text-align: center; }
+  .cover .content { max-width: 1240px; transform: translateY(-10px); }
+  .cover .tag { padding: 10px 18px; font-size: 16px; margin-bottom: 34px; }
+  .cover h1 { font-size: 98px; line-height: 1.03; margin-bottom: 32px; }
+  .closing .content { max-width: 1080px; }
+  .cover-split {
+    width: min(1360px, 100%);
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) 360px;
+    gap: 42px;
+    align-items: center;
+  }
+  .cover-copy {
+    text-align: left;
+    transform: translateY(-8px);
+  }
+  .cover-copy .subtitle {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .cover-shot {
+    justify-self: end;
+    width: 360px;
+    max-height: 88vh;
+    padding: 12px;
+    border-radius: 34px;
+    border: 1px solid rgba(89,210,244,0.18);
+    background: linear-gradient(180deg, rgba(10,24,45,0.9) 0%, rgba(6,16,30,0.86) 100%);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.28);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .cover-shot-notch {
+    width: 104px;
+    height: 8px;
+    margin: 0 auto 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .cover-shot .qa-image-frame {
+    border-radius: 26px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .cover-shot .qa-image-frame.is-phone {
+    min-height: 200px;
+  }
+  .cover-shot .qa-image-preview {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    background: rgba(4,12,24,0.84);
+    border-radius: 22px;
+  }
+
+  /* Staircase layout */
+  .staircase {
+    display: flex; gap: 20px; margin-top: 42px; align-items: flex-end;
+  }
+  .stair-step {
+    flex: 1; text-align: center; border-radius: 20px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(12,27,49,0.86) 0%, rgba(7,18,34,0.74) 100%);
+    box-shadow: var(--shadow); padding: 28px 22px;
+    transition: all 0.3s ease;
+  }
+  .stair-step:hover { transform: translateY(-4px); border-color: rgba(89,210,244,0.35); }
+  .stair-step:nth-child(1) { min-height: 200px; }
+  .stair-step:nth-child(2) { min-height: 240px; }
+  .stair-step:nth-child(3) { min-height: 280px; }
+  .stair-step:nth-child(4) { min-height: 320px; }
+  .stair-step:nth-child(5) { min-height: 360px; }
+  .stair-label { font-size: 13px; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+  .stair-title { font-size: 20px; font-weight: 900; color: var(--ink); margin-bottom: 10px; }
+  .stair-desc { font-size: 15px; color: var(--muted); line-height: 1.8; }
+
+  /* Rule list */
+  .rule-list { display: flex; flex-direction: column; gap: 20px; margin-top: 36px; max-width: 920px; margin-left: auto; margin-right: auto; }
+  .rule-item {
+    display: flex; align-items: center; gap: 20px;
+    padding: 24px 30px; border-radius: 18px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(12,27,49,0.84) 0%, rgba(7,18,34,0.72) 100%);
+    box-shadow: var(--shadow); text-align: left;
+    transition: all 0.3s ease;
+  }
+  .rule-item:hover { border-color: rgba(89,210,244,0.3); transform: translateX(4px); }
+  .rule-item .num {
+    flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(89,210,244,0.14); border: 1px solid rgba(89,210,244,0.28);
+    color: var(--accent); font-size: 18px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rule-text { font-size: 20px; color: #d2e4f3; line-height: 1.7; }
+  .rule-text strong { color: var(--ink); }
+
+  .slide.active .rule-item:nth-child(1) { animation: fadeLeft 0.4s ease both; animation-delay: 0.3s; }
+  .slide.active .rule-item:nth-child(2) { animation: fadeLeft 0.4s ease both; animation-delay: 0.4s; }
+  .slide.active .rule-item:nth-child(3) { animation: fadeLeft 0.4s ease both; animation-delay: 0.5s; }
+  .slide.active .rule-item:nth-child(4) { animation: fadeLeft 0.4s ease both; animation-delay: 0.6s; }
+  .slide.active .rule-item:nth-child(5) { animation: fadeLeft 0.4s ease both; animation-delay: 0.7s; }
+
+  /* Live stream cards */
+  .live-strip {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px; margin-top: 38px;
+  }
+  .live-card {
+    padding: 28px 20px 24px; border-radius: 20px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(12,27,49,0.88) 0%, rgba(7,18,34,0.76) 100%);
+    box-shadow: var(--shadow); text-align: center;
+    transition: all 0.3s ease;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .live-card:hover { border-color: rgba(89,210,244,0.35); transform: translateY(-3px); }
+  .live-avatar-wrap {
+    width: 72px; height: 72px; border-radius: 50%; overflow: hidden;
+    margin-bottom: 14px; position: relative;
+    border: 2px solid rgba(89,210,244,0.3);
+    background: rgba(89,210,244,0.06);
+  }
+  .live-avatar {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+  }
+  .live-avatar-placeholder {
+    width: 100%; height: 100%; display: flex;
+    align-items: center; justify-content: center;
+    cursor: pointer; color: rgba(89,210,244,0.4);
+    transition: color 0.2s;
+  }
+  .live-avatar-placeholder:hover { color: var(--accent); }
+  .live-coach {
+    font-size: 17px; font-weight: 700; color: var(--ink);
+    margin-bottom: 14px; min-width: 60px;
+    outline: none; border-bottom: 1px dashed rgba(89,210,244,0.2);
+    padding-bottom: 2px;
+  }
+  .live-coach:focus { border-bottom-color: var(--accent); }
+  .live-divider {
+    width: 36px; height: 2px; border-radius: 1px;
+    background: linear-gradient(90deg, transparent, rgba(89,210,244,0.4), transparent);
+    margin-bottom: 14px;
+  }
+  .live-date {
+    font-size: 22px; font-weight: 900; color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .live-time {
+    font-size: 14px; color: var(--soft); font-weight: 600;
+    margin-bottom: 12px; letter-spacing: 0.05em;
+  }
+  .live-title {
+    font-size: 18px; font-weight: 800; color: var(--ink);
+    margin-bottom: 8px; outline: none;
+    border-bottom: 1px dashed rgba(89,210,244,0.2);
+    padding-bottom: 2px; min-width: 60px;
+  }
+  .live-title:focus { border-bottom-color: var(--accent); }
+  .live-label {
+    font-size: 13px; color: var(--soft); letter-spacing: 0.06em;
+  }
+  .live-date[contenteditable="true"],
+  .live-time[contenteditable="true"],
+  .live-label[contenteditable="true"] {
+    outline: none;
+    border-bottom: 1px dashed rgba(89,210,244,0.18);
+    padding-bottom: 2px;
+  }
+  .live-date[contenteditable="true"]:focus,
+  .live-time[contenteditable="true"]:focus,
+  .live-label[contenteditable="true"]:focus {
+    border-bottom-color: var(--accent);
+  }
+  .live-desc {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    outline: none;
+    border-bottom: 1px dashed rgba(89,210,244,0.14);
+    padding-bottom: 2px;
+  }
+  .live-desc:focus { border-bottom-color: var(--accent); }
+
+  /* Q&A page */
+  .qa-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.95fr);
+    gap: 28px;
+    margin-top: 22px;
+    align-items: stretch;
+    text-align: left;
+  }
+  .qa-panel {
+    border-radius: 26px;
+    border: 1px solid rgba(89,210,244,0.14);
+    background: linear-gradient(180deg, rgba(12,27,49,0.9) 0%, rgba(7,18,34,0.82) 100%);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .qa-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 640px;
+  }
+  .qa-shell-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(89,210,244,0.08);
+    background: rgba(255,255,255,0.02);
+  }
+  .qa-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .qa-brand-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(42,212,179,0.3);
+    background: rgba(42,212,179,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-3);
+    font-weight: 800;
+  }
+  .qa-brand-text strong {
+    display: block;
+    font-size: 20px;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .qa-brand-text span {
+    font-size: 12px;
+    color: var(--soft);
+  }
+  .qa-search {
+    flex: 1;
+    height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(89,210,244,0.12);
+    background: rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    color: var(--soft);
+    font-size: 15px;
+  }
+  .qa-ask-btn {
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #49a7ff 0%, #43e0cf 100%);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  .qa-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 20px;
+    padding: 20px;
+    flex: 1;
+  }
+  .qa-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .qa-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .qa-tab {
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--soft);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid transparent;
+  }
+  .qa-tab.active {
+    color: var(--accent-3);
+    border-color: rgba(42,212,179,0.2);
+    background: rgba(42,212,179,0.08);
+  }
+  .qa-item {
+    padding: 18px 18px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(89,210,244,0.1);
+    background: rgba(255,255,255,0.03);
+  }
+  .qa-item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .qa-item-title {
+    font-size: 24px;
+    line-height: 1.45;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .qa-item-title small {
+    margin-right: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--accent-3);
+    border: 1px solid rgba(42,212,179,0.24);
+    background: rgba(42,212,179,0.08);
+    vertical-align: middle;
+  }
+  .qa-item-date {
+    font-size: 13px;
+    color: var(--soft);
+    white-space: nowrap;
+  }
+  .qa-item-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .qa-item-meta {
+    display: flex;
+    gap: 18px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--soft);
+  }
+  .qa-side {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .qa-side-box {
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(89,210,244,0.1);
+    background: rgba(255,255,255,0.03);
+  }
+  .qa-side-box h4 {
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .qa-rank {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .qa-rank-item {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .qa-rank-no {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: rgba(241,189,103,0.14);
+    color: var(--accent-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .qa-action-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .qa-action-card {
+    padding: 16px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(89,210,244,0.14);
+    background: linear-gradient(180deg, rgba(12,27,49,0.9) 0%, rgba(7,18,34,0.82) 100%);
+    box-shadow: var(--shadow);
+  }
+  .qa-main-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .qa-action-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .qa-action-head h3 {
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .qa-chip {
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    border: 1px solid rgba(89,210,244,0.22);
+    background: rgba(89,210,244,0.08);
+  }
+  .qa-action-card p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .qa-mini-shot {
+    border-radius: 18px;
+    border: 1px solid rgba(89,210,244,0.12);
+    background: rgba(255,255,255,0.03);
+    overflow: hidden;
+  }
+  .qa-mini-top {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(89,210,244,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--soft);
+  }
+  .qa-mini-body {
+    padding: 14px;
+  }
+  .qa-mini-ask {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .qa-mini-cta {
+    align-self: flex-start;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #49a7ff 0%, #43e0cf 100%);
+    font-size: 12px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .qa-mini-input {
+    min-height: 74px;
+    border-radius: 16px;
+    border: 1px solid rgba(89,210,244,0.1);
+    background: rgba(255,255,255,0.03);
+    padding: 14px;
+    color: var(--soft);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .qa-mini-subscribe {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(89,210,244,0.1);
+    margin-bottom: 12px;
+  }
+  .qa-mini-subscribe strong,
+  .qa-mini-follow strong {
+    color: var(--ink);
+    font-size: 15px;
+  }
+  .qa-mini-subscribe .btn,
+  .qa-mini-follow .btn {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(89,210,244,0.22);
+    color: var(--ink);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .qa-mini-follow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(89,210,244,0.1);
+  }
+  .qa-avatar-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .qa-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(89,210,244,0.44), rgba(18,96,168,0.2));
+    border: 1px solid rgba(89,210,244,0.18);
+  }
+  .qa-avatar-line span {
+    display: block;
+    font-size: 12px;
+    color: var(--soft);
+    margin-top: 2px;
+  }
+  .qa-image-frame {
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid rgba(89,210,244,0.14);
+    background: rgba(255,255,255,0.03);
+    overflow: hidden;
+    overflow-y: auto;
+    cursor: pointer;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(89,210,244,0.25) transparent;
+  }
+  .qa-image-frame:hover {
+    border-color: rgba(89,210,244,0.3);
+    transform: translateY(-2px);
+  }
+  .qa-image-frame.is-main { min-height: 472px; flex: 1; }
+  .qa-image-frame.is-side { min-height: 132px; }
+  .qa-image-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(89,210,244,0.42);
+    text-align: center;
+    padding: 24px;
+  }
+  .qa-image-empty strong {
+    color: var(--ink);
+    font-size: 16px;
+  }
+  .qa-image-empty span {
+    color: var(--soft);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .qa-image-preview {
+    width: 100%;
+    height: auto;
+    display: none;
+  }
+  .qa-image-preview.is-landscape {
+    background: rgba(4,12,24,0.92);
+  }
+  .qa-image-preview.is-portrait {
+    background: rgba(4,12,24,0.88);
+  }
+  .qa-image-frame.is-main .qa-image-preview { min-height: 0; }
+  .qa-image-frame.is-side .qa-image-preview { min-height: 0; }
+  .qa-scene-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) 320px;
+    gap: 26px;
+    margin-top: 18px;
+    align-items: stretch;
+  }
+  .qa-device-card {
+    padding: 14px 14px 16px;
+    border-radius: 22px;
+    border: 1px solid rgba(89,210,244,0.14);
+    background: linear-gradient(180deg, rgba(12,27,49,0.9) 0%, rgba(7,18,34,0.82) 100%);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .qa-device-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .qa-device-head h3 {
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .qa-device-head p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+  .qa-desktop-frame {
+    flex: 1;
+    min-height: 400px;
+  }
+  .qa-desktop-frame .qa-image-preview {
+    min-height: 400px;
+    object-fit: contain;
+    background: rgba(4,12,24,0.86);
+  }
+  .qa-phone-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .qa-phone-shell {
+    width: 260px;
+    padding: 12px 9px 14px;
+    border-radius: 34px;
+    border: 1px solid rgba(89,210,244,0.16);
+    background: linear-gradient(180deg, rgba(10,24,45,0.92) 0%, rgba(6,16,30,0.88) 100%);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.28);
+  }
+  .qa-phone-notch {
+    width: 92px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    margin: 0 auto 10px;
+  }
+  .qa-phone-shell .qa-image-frame {
+    border-radius: 24px;
+  }
+  .qa-phone-shell .qa-image-frame.is-phone {
+    min-height: 356px;
+  }
+  .qa-phone-shell .qa-image-preview {
+    min-height: 356px;
+    object-fit: contain;
+    background: rgba(4,12,24,0.82);
+  }
+  .qa-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .qa-feature-grid .qa-action-card {
+    min-height: 0;
+  }
+  .qa-feature-grid .qa-image-frame.is-side {
+    min-height: 160px;
+  }
+  .qa-feature-grid .qa-image-preview {
+    min-height: 0;
+  }
+  .free-edit {
+    position: relative;
+    cursor: text;
+    user-select: text;
+  }
+  .free-edit.is-draggable {
+    cursor: grab;
+  }
+  .free-edit.is-draggable:active {
+    cursor: grabbing;
+  }
+  .free-edit:focus {
+    outline: 1px dashed rgba(89,210,244,0.28);
+    outline-offset: 6px;
+  }
+  .free-edit.dragging {
+    z-index: 20;
+    opacity: 0.96;
+  }
+  .free-edit[data-x],
+  .free-edit[data-y] {
+    transform: translate(var(--tx, 0px), var(--ty, 0px));
+  }
+
+  .slide.active .live-card:nth-child(1) { animation: scaleIn 0.4s ease both; animation-delay: 0.3s; }
+  .slide.active .live-card:nth-child(2) { animation: scaleIn 0.4s ease both; animation-delay: 0.4s; }
+  .slide.active .live-card:nth-child(3) { animation: scaleIn 0.4s ease both; animation-delay: 0.5s; }
+  .slide.active .live-card:nth-child(4) { animation: scaleIn 0.4s ease both; animation-delay: 0.6s; }
+  .slide.active .live-card:nth-child(5) { animation: scaleIn 0.4s ease both; animation-delay: 0.7s; }
+
+  /* Tool slide image zone */
+  .slide.has-img-zone {
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 0 3% 0 6% !important;
+    gap: 32px;
+  }
+  .slide.has-img-zone .content {
+    flex: 1; min-width: 0; width: auto;
+  }
+  .tool-img-zone {
+    flex-shrink: 0;
+    width: 300px;
+    aspect-ratio: 3 / 4;
+    border-radius: 20px;
+    border: 2px dashed rgba(89,210,244,0.18);
+    background: rgba(8,20,38,0.28);
+    backdrop-filter: blur(12px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px; position: relative; overflow: hidden; overflow-y: auto;
+    transition: border-color 0.3s; cursor: pointer;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(89,210,244,0.25) transparent;
+  }
+  .tool-img-zone:hover { border-color: rgba(89,210,244,0.42); }
+  .tool-img-zone .tz-icon { color: rgba(89,210,244,0.28); transition: color 0.2s; }
+  .tool-img-zone:hover .tz-icon { color: rgba(89,210,244,0.6); }
+  .tool-img-zone .tz-hint { font-size: 13px; color: rgba(89,210,244,0.32); text-align: center; line-height: 1.7; }
+  .tool-img-zone img.tz-preview {
+    width: 100%; height: auto;
+    border-radius: 18px; display: none;
+  }
+
+  /* S8 live overview */
+  .live-overview {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 28px;
+  }
+  .overview-card {
+    padding: 22px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(89,210,244,0.18);
+    background: linear-gradient(180deg, rgba(12,27,49,0.88) 0%, rgba(7,18,34,0.76) 100%);
+    box-shadow: var(--shadow);
+    text-align: left;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .overview-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(89,210,244,0.34);
+  }
+  .overview-label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--soft);
+    margin-bottom: 12px;
+  }
+  .overview-value {
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .overview-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .overview-text strong { color: var(--ink); }
+
+  .live-schedule {
+    margin-top: 24px;
+    padding: 24px 26px;
+    border-radius: 24px;
+    border: 1px solid rgba(89,210,244,0.18);
+    background: linear-gradient(180deg, rgba(10,24,45,0.82) 0%, rgba(7,18,34,0.74) 100%);
+    box-shadow: var(--shadow);
+    text-align: left;
+  }
+  .live-schedule-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .live-schedule-head h3 {
+    font-size: 24px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .live-schedule-head span {
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .schedule-strip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .schedule-pill {
+    min-height: 118px;
+    padding: 18px 14px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(89,210,244,0.14);
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .schedule-pill.is-accent {
+    border-color: rgba(241,189,103,0.24);
+    background: linear-gradient(180deg, rgba(42,33,16,0.34) 0%, rgba(9,21,39,0.82) 100%);
+  }
+  .schedule-date {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .schedule-pill.is-accent .schedule-date { color: var(--accent-2); }
+  .schedule-topic {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .schedule-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--soft);
+  }
+
+  .tool-side {
+    flex-shrink: 0;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .tool-side-mix {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .coach-quicklist {
+    display: grid;
+    gap: 10px;
+  }
+  .coach-quick-card {
+    padding: 14px 14px 13px;
+    border-radius: 18px;
+    border: 1px solid rgba(89,210,244,0.15);
+    background: linear-gradient(180deg, rgba(13,30,54,0.92) 0%, rgba(7,18,34,0.80) 100%);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.16);
+    text-align: left;
+  }
+  .coach-quick-card.is-gold {
+    border-color: rgba(241,189,103,0.22);
+    background: linear-gradient(180deg, rgba(42,33,16,0.42) 0%, rgba(7,18,34,0.84) 100%);
+  }
+  .coach-quick-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .coach-quick-date {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .coach-quick-card.is-gold .coach-quick-date { color: var(--accent-2); }
+  .coach-quick-time {
+    font-size: 12px;
+    color: var(--soft);
+    letter-spacing: 0.06em;
+  }
+  .coach-quick-topic {
+    font-size: 17px;
+    line-height: 1.45;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .coach-quick-name {
+    font-size: 14px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .coach-quick-desc {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .coach-quick-meta {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--soft);
+  }
+  .tool-side .tool-img-zone {
+    width: 100%;
+  }
+  .tool-side-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: rgba(6, 15, 28, 0.78);
+    border: 1px solid rgba(89,210,244,0.16);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 38px rgba(0,0,0,0.18);
+  }
+  .tool-side-head strong {
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .tool-side-head span {
+    font-size: 12px;
+    color: var(--soft);
+    white-space: nowrap;
+  }
+  .tool-side-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 4px;
+    font-size: 11px;
+    color: var(--soft);
+    letter-spacing: 0.06em;
+  }
+  .tool-side-caption strong {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 1200px) {
+    .cards-6, .cards-5, .cards-4, .cards-3,
+    .calendar-head, .calendar-grid,
+    .feature-grid, .event-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .two-col { grid-template-columns: 1fr; }
+    .staircase { flex-wrap: wrap; }
+    .stair-step { min-width: calc(50% - 12px); min-height: auto !important; }
+    .live-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .live-overview,
+    .schedule-strip,
+    .qa-layout { grid-template-columns: 1fr; }
+    .qa-main { grid-template-columns: 1fr; }
+    .qa-scene-layout,
+    .qa-feature-grid { grid-template-columns: 1fr; }
+    .cover-split { grid-template-columns: 1fr; gap: 24px; }
+    .cover-copy { text-align: center; transform: none; }
+    .cover-copy .subtitle { margin-left: auto; margin-right: auto; }
+    .cover-shot { justify-self: center; width: min(360px, 100%); }
+    .voyage-toolbar { gap: 8px; }
+    .voyage-pill { font-size: 12px; padding: 7px 12px; }
+    .voyage-weekdays,
+    .voyage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<!-- P1: 封面 -->
+<div class="slide center cover active" id="s1">
+  <div class="content">
+    <div class="tag">OPENING CEREMONY · 2026.05.07</div>
+    <h1>5月超级<span class="accent">AI</span>大航海</h1>
+    <h2 style="font-size:32px; color:#9AB2C7; font-weight:500;">开船仪式</h2>
+    <div class="subtitle" style="margin-top:40px; font-size:24px; color:var(--muted);">
+      欢迎登船，接下来14天，我们一起走
+    </div>
+  </div>
+</div>
+
+<!-- s1 封面 AI 呼吸光效 -->
+<style>
+  @keyframes aiGlow {
+    0%, 100% { text-shadow: 0 0 12px rgba(89,210,244,0.3), 0 0 40px rgba(89,210,244,0.1); }
+    50% { text-shadow: 0 0 24px rgba(89,210,244,0.6), 0 0 72px rgba(89,210,244,0.2); }
+  }
+  .cover h1 .accent { animation: aiGlow 3s ease-in-out infinite; }
+</style>
+
+<!-- P2: 破冰 -->
+<div class="slide center" id="s2">
+  <div class="content">
+    <div class="tag">ICE BREAKING</div>
+    <h2>你为什么<span class="accent">加入生财</span>？</h2>
+    <div class="subtitle" style="margin-top:16px; font-size:22px;">
+      在评论区打出你的昵称，随便说一句，不用很长
+    </div>
+    <div style="display:flex; justify-content:center; gap:24px; margin-top:36px; flex-wrap:wrap;">
+      <div style="padding:18px 36px; border-radius:999px; border:1px solid rgba(89,210,244,0.24); background:rgba(8,20,38,0.4); backdrop-filter:blur(10px); font-size:22px; color:var(--ink); font-weight:700;">想学 AI</div>
+      <div style="padding:18px 36px; border-radius:999px; border:1px solid rgba(241,189,103,0.28); background:rgba(42,33,16,0.3); backdrop-filter:blur(10px); font-size:22px; color:var(--accent-2); font-weight:700;">找同频的人</div>
+      <div style="padding:18px 36px; border-radius:999px; border:1px solid rgba(42,212,179,0.24); background:rgba(16,42,33,0.3); backdrop-filter:blur(10px); font-size:22px; color:var(--accent-3); font-weight:700;">朋友拉我来的</div>
+    </div>
+  </div>
+</div>
+
+<!-- P3: 今日议程 -->
+<div class="slide center" id="s3">
+  <div class="content">
+    <div class="tag">OPENING CEREMONY · AGENDA</div>
+    <h2>今天的<span class="accent">开船仪式</span></h2>
+    <div class="two-col" style="margin-top:38px;">
+
+      <!-- Part 01 -->
+      <div class="panel" style="text-align:left;">
+        <h3 style="color:var(--accent); font-size:22px; margin-bottom:22px; text-align:center; letter-spacing:0.08em;">Part 01</h3>
+        <div style="display:grid; grid-template-columns:100px 1fr; gap:24px; align-items:center;">
+          <div style="text-align:center;">
+            <div style="width:80px; height:80px; border-radius:50%; overflow:hidden; border:2px solid rgba(89,210,244,0.3); background:rgba(89,210,244,0.06); margin:0 auto 12px; display:flex; align-items:center; justify-content:center; position:relative;">
+              <img id="ag-avatar1" src="" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none; position:absolute; inset:0;">
+              <label for="ag-upload1" style="cursor:pointer; color:rgba(89,210,244,0.4); transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(89,210,244,0.4)'">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </label>
+              <input type="file" id="ag-upload1" accept="image/*" style="display:none;" onchange="handleAvatar(this,'ag-avatar1')">
+            </div>
+            <div contenteditable="true" spellcheck="false" style="font-size:17px; font-weight:700; color:var(--ink); outline:none; border-bottom:1px dashed rgba(89,210,244,0.22); padding-bottom:3px; text-align:center; cursor:text;">欢欢</div>
+          </div>
+          <div style="border-left:1px solid rgba(89,210,244,0.15); padding-left:22px; font-size:18px; color:var(--muted); line-height:2.6;">
+            航海整体节奏<br>
+            航海工具<br>
+            航海规则
+          </div>
+        </div>
+      </div>
+
+      <!-- Part 02 -->
+      <div class="panel gold" style="text-align:left;">
+        <h3 style="color:var(--accent-2); font-size:22px; margin-bottom:22px; text-align:center; letter-spacing:0.08em;">Part 02</h3>
+        <div style="display:grid; grid-template-columns:100px 1fr; gap:24px; align-items:center;">
+          <div style="text-align:center;">
+            <div style="width:80px; height:80px; border-radius:50%; overflow:hidden; border:2px solid rgba(241,189,103,0.3); background:rgba(241,189,103,0.06); margin:0 auto 12px; display:flex; align-items:center; justify-content:center; position:relative;">
+              <img id="ag-avatar2" src="" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none; position:absolute; inset:0;">
+              <label for="ag-upload2" style="cursor:pointer; color:rgba(241,189,103,0.4); transition:color 0.2s;" onmouseover="this.style.color='var(--accent-2)'" onmouseout="this.style.color='rgba(241,189,103,0.4)'">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </label>
+              <input type="file" id="ag-upload2" accept="image/*" style="display:none;" onchange="handleAvatar(this,'ag-avatar2')">
+            </div>
+            <div contenteditable="true" spellcheck="false" style="font-size:17px; font-weight:700; color:var(--ink); outline:none; border-bottom:1px dashed rgba(241,189,103,0.22); padding-bottom:3px; text-align:center; cursor:text;">条形马老师</div>
+          </div>
+          <div style="border-left:1px solid rgba(241,189,103,0.15); padding-left:22px; font-size:18px; color:var(--muted); line-height:2.6;">
+            5月航海第一大能力<br>
+            <strong style="color:var(--accent-2); font-size:21px;">AI 思考能力</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="highlight-box" style="margin-top:26px; font-size:20px;">
+      第二部分是这次航海比较核心的内容，<span style="color:var(--accent-2);">一定要留下来听</span>
+    </div>
+  </div>
+</div>
+
+<!-- P4: 航程安排 -->
+<div class="slide center" id="s4">
+  <div class="content">
+    <div class="tag">VOYAGE CALENDAR</div>
+    <h2>航程安排</h2>
+    <div class="subtitle" style="margin-bottom:0;">直接按日历看，更容易把整个月的节奏一次看清</div>
+    <div class="voyage-toolbar">
+      <div class="voyage-pill">Day0 开船仪式</div>
+      <div class="voyage-pill is-gold">5 场高手领航</div>
+      <div class="voyage-pill is-green">5月22日 靠岸</div>
+    </div>
+    <div class="voyage-calendar-wrap">
+      <div class="voyage-calendar">
+        <div class="voyage-calendar-month">5月</div>
+        <div class="voyage-weekdays">
+          <div class="voyage-weekday">周一</div>
+          <div class="voyage-weekday">周二</div>
+          <div class="voyage-weekday">周三</div>
+          <div class="voyage-weekday">周四</div>
+          <div class="voyage-weekday">周五</div>
+          <div class="voyage-weekday weekend">周六</div>
+          <div class="voyage-weekday weekend">周日</div>
+        </div>
+        <div class="voyage-grid">
+          <div class="voyage-cell empty"></div>
+          <div class="voyage-cell empty"></div>
+          <div class="voyage-cell empty"></div>
+          <div class="voyage-cell empty"></div>
+
+          <div class="voyage-cell holiday">
+            <div class="voyage-date">1 <span class="voyage-rest">（休）</span></div>
+            <div class="voyage-body">
+              <div class="voyage-note">志愿者邀请船员</div>
+            </div>
+          </div>
+          <div class="voyage-cell holiday weekend">
+            <div class="voyage-date">2 <span class="voyage-rest">（休）</span></div>
+            <div class="voyage-body"></div>
+          </div>
+          <div class="voyage-cell holiday weekend">
+            <div class="voyage-date">3 <span class="voyage-rest">（休）</span></div>
+            <div class="voyage-body"></div>
+          </div>
+
+          <div class="voyage-cell holiday">
+            <div class="voyage-date">4 <span class="voyage-rest">（休）</span></div>
+            <div class="voyage-body"></div>
+          </div>
+          <div class="voyage-cell holiday">
+            <div class="voyage-date">5 <span class="voyage-rest">（休）</span></div>
+            <div class="voyage-body"></div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">6</div>
+            <div class="voyage-body"></div>
+          </div>
+          <div class="voyage-cell milestone">
+            <div class="voyage-date">7</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day0</div>
+              <div class="voyage-event ceremony">开船仪式</div>
+              <div class="voyage-event coach">高手领航一</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">8</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day1</div>
+            </div>
+          </div>
+          <div class="voyage-cell weekend">
+            <div class="voyage-date">9 <span class="voyage-work">（班）</span></div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day2</div>
+              <div class="voyage-event coach">高手领航二</div>
+            </div>
+          </div>
+          <div class="voyage-cell weekend">
+            <div class="voyage-date">10</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day3</div>
+            </div>
+          </div>
+
+          <div class="voyage-cell">
+            <div class="voyage-date">11</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day4</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">12</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day5</div>
+              <div class="voyage-event coach">高手领航三</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">13</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day6</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">14</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day7</div>
+              <div class="voyage-event coach">高手领航四</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">15</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day8</div>
+            </div>
+          </div>
+          <div class="voyage-cell weekend">
+            <div class="voyage-date">16</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day9</div>
+            </div>
+          </div>
+          <div class="voyage-cell weekend">
+            <div class="voyage-date">17</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day10</div>
+            </div>
+          </div>
+
+          <div class="voyage-cell">
+            <div class="voyage-date">18</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day11</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">19</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day12</div>
+              <div class="voyage-event coach">高手领航五</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">20</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day13</div>
+            </div>
+          </div>
+          <div class="voyage-cell">
+            <div class="voyage-date">21</div>
+            <div class="voyage-body">
+              <div class="voyage-day-label">Day14</div>
+            </div>
+          </div>
+          <div class="voyage-cell milestone">
+            <div class="voyage-date">22</div>
+            <div class="voyage-body">
+              <div class="voyage-event arrival">5月靠岸</div>
+            </div>
+          </div>
+          <div class="voyage-cell weekend">
+            <div class="voyage-date">23</div>
+            <div class="voyage-body"></div>
+          </div>
+          <div class="voyage-cell weekend">
+            <div class="voyage-date">24</div>
+            <div class="voyage-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="voyage-footnote">
+      建议把这页当成航海总览来看：先记住 Day0、Day1、5 次领航和 5 月 22 日靠岸，其他日期按节奏往下推进就够了。
+    </div>
+    <div class="highlight-box" style="margin-top:22px; font-size:21px;">
+      日历不是为了记住所有日期，而是让大家知道：<span style="color:var(--accent);">什么时候启航、什么时候直播、什么时候靠岸</span>
+    </div>
+  </div>
+</div>
+
+<!-- P5: 航海工具总览 -->
+<div class="slide center" id="s5">
+  <div class="content">
+    <div class="tag">TOOLKIT OVERVIEW</div>
+    <h2>航海期间有哪些<span class="accent">工具</span></h2>
+    <div class="subtitle" style="margin-bottom:0;">这些工具用好了，会一定程度上提升大家的航行效率</div>
+    <div class="cards cards-6">
+      <div class="card">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <div class="card-title">航海手册</div>
+        <div class="card-body">最全最详细的项目资料<br>相当于我们的<strong>教材</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+        <div class="card-title">航线图</div>
+        <div class="card-body">把手册拆成小目标<br><strong>降低行动门槛</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+        <div class="card-title">高手领航</div>
+        <div class="card-body">教练直播讲解+实操<br><strong>5场直播</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        <div class="card-title">作业点评</div>
+        <div class="card-body">提交作业争取被看到<br><strong>2次教练点评</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="card-title">航海问答&AI助手</div>
+        <div class="card-body">高价值问答沉淀<br><strong>AI 7x24在线</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="card-title">航海群聊</div>
+        <div class="card-body">交流群+禁言通知群<br><strong>主战场</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P6: 航海手册 -->
+<div class="slide center" id="s6">
+  <div class="content" style="width:min(1360px,100%); display:flex; flex-direction:column; padding:20px 2%; height:100vh; box-sizing:border-box; overflow:hidden;">
+    <!-- 顶部标题 -->
+    <div style="text-align:center; margin-bottom:12px; flex-shrink:0;">
+      <div class="tag" style="margin-bottom:8px; padding:6px 16px; font-size:14px;">TOOL 01 · 航海手册</div>
+      <h2 style="margin-bottom:0; font-size:clamp(24px,2.8vw,42px);">航海手册</h2>
+    </div>
+    <!-- 主体：左截图 + 右面板 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; flex:1; min-height:0;">
+      <!-- 左：截图（与右侧等高，可滑动+点击放大） -->
+      <div onclick="if(!_drag||!_drag.moved)zoomImg('img-handbook.png')" style="border-radius:16px; overflow:hidden; border:1px solid rgba(89,210,244,0.22); box-shadow:0 0 40px rgba(89,210,244,0.08), 0 24px 60px rgba(0,0,0,0.4); cursor:zoom-in; display:flex; flex-direction:column; transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(89,210,244,0.45)'" onmouseout="this.style.borderColor='rgba(89,210,244,0.22)'">
+        <div style="background:rgba(12,27,49,0.95); padding:8px 12px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(89,210,244,0.1); flex-shrink:0;">
+          <span style="width:9px;height:9px;border-radius:50%;background:#f26b6b;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#f1bd67;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#2ad4b3;display:inline-block;"></span>
+          <span style="flex:1;margin-left:8px;background:rgba(255,255,255,0.06);border-radius:4px;padding:3px 10px;font-size:11px;color:rgba(255,255,255,0.3);">shengcaiyoushu.com · 超级AI大航海实战手册</span>
+        </div>
+        <div id="hb-scroll" style="flex:1;overflow-x:auto;overflow-y:hidden;cursor:grab;scrollbar-width:none;display:flex;align-items:stretch;min-height:0;" onmousedown="startDrag(event,this)" onclick="event.stopPropagation()">
+          <img src="img-handbook.png" alt="航海手册截图" style="height:100%;width:auto;display:block;pointer-events:none;flex-shrink:0;">
+        </div>
+      </div>
+      <!-- 右：必修篇 + 选修篇 上下排列 -->
+      <div style="display:flex; flex-direction:column; gap:12px; min-height:0;">
+        <div class="panel" style="flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0; padding:20px 28px;">
+          <h3 style="color:var(--accent); margin-bottom:10px;">必修篇</h3>
+          <p style="font-size:17px; line-height:1.85; margin:0;">
+            从 0 到 1 跑通一个最小 MVP 的所有步骤<br><br>
+            <strong>适合人群：</strong><br>
+            新人或前期摸索中的船员<br>
+            想先完成一次整体项目流程
+          </p>
+        </div>
+        <div class="panel" style="flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0; padding:20px 28px;">
+          <h3 style="color:var(--accent-2); margin-bottom:10px;">选修篇</h3>
+          <p style="font-size:17px; line-height:1.85; margin:0;">
+            了解该项目的更多可能性<br><br>
+            <strong>适合人群：</strong><br>
+            已跑通最小MVP的船员<br>
+            想进一步拓展玩法
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- 底部划重点 -->
+    <div class="highlight-box" style="margin-top:12px; font-size:18px; flex-shrink:0; padding:14px 24px;">
+      <span style="color:var(--accent-2);">划重点：</span>航海手册在 <span style="color:var(--accent);">Day1 早上 10:00 前</span>开放，大家到时候就可以查看了
+    </div>
+  </div>
+</div>
+
+<!-- P7: 航线图 -->
+<div class="slide center has-img-zone" id="s7">
+  <div class="content">
+    <div class="tag">TOOL 02 · 航线图</div>
+    <h2>航线图</h2>
+    <div class="subtitle" style="margin-bottom:0;">如果你的行动力不够，那一定是因为你的目标拆解得不够细</div>
+    <div class="staircase">
+      <div class="stair-step">
+        <div class="stair-label">STEP 1</div>
+        <div class="stair-title">阶段目标</div>
+        <div class="stair-desc">从手册内容中<br>拆分阶段</div>
+      </div>
+      <div class="stair-step">
+        <div class="stair-label">STEP 2</div>
+        <div class="stair-title">小目标</div>
+        <div class="stair-desc">按实现路径<br>拆成更细的任务</div>
+      </div>
+      <div class="stair-step">
+        <div class="stair-label">STEP 3</div>
+        <div class="stair-title">预估时长</div>
+        <div class="stair-desc">每个小目标<br>标注预计耗时</div>
+      </div>
+      <div class="stair-step">
+        <div class="stair-label">STEP 4</div>
+        <div class="stair-title">逐步推进</div>
+        <div class="stair-desc">手中有图<br>心中不慌</div>
+      </div>
+      <div class="stair-step">
+        <div class="stair-label">GOAL</div>
+        <div class="stair-title">升级打怪</div>
+        <div class="stair-desc">一步步完成<br>降低行动门槛</div>
+      </div>
+    </div>
+  </div>
+  <div class="tool-img-zone" id="tz-s7" onclick="zoomImg('img-route.png')" style="cursor:zoom-in; border-color:rgba(89,210,244,0.3);">
+    <img src="img-route.png" alt="航线图截图" style="width:100%;height:100%;object-fit:cover;border-radius:18px;display:block;">
+  </div>
+</div>
+
+<!-- P8: 高手领航 -->
+<div class="slide center has-img-zone" id="s8">
+  <div class="content">
+    <div class="tag">TOOL 03 · 高手领航</div>
+    <h2>高手领航直播</h2>
+    <div class="subtitle" style="margin-bottom:0;">5 场直播，5 位教练，围绕 5 大能力模块，带你把关键动作一场场跑通</div>
+
+    <div class="live-overview">
+      <div class="overview-card">
+        <div class="overview-label">LIVE COUNT</div>
+        <div class="overview-value">5 场</div>
+        <div class="overview-text">从 <strong>5 月 7 日</strong> 到 <strong>5 月 19 日</strong>，关键节点都有人带着你往前走。</div>
+      </div>
+      <div class="overview-card">
+        <div class="overview-label">ABILITY MAP</div>
+        <div class="overview-value">5 大能力</div>
+        <div class="overview-text">思考、积累、表达、产品、执行，和本期航海主线一一对应。</div>
+      </div>
+      <div class="overview-card">
+        <div class="overview-label">BEST PRACTICE</div>
+        <div class="overview-value">尽量到场</div>
+        <div class="overview-text">错过可以看回放，但<strong>现场听 + 当场做</strong>，更容易把知识变成动作。</div>
+      </div>
+    </div>
+
+    <div class="live-schedule">
+      <div class="live-schedule-head">
+        <h3>直播安排</h3>
+        <span>RECOMMENDED TO ATTEND ALL</span>
+      </div>
+      <div class="schedule-strip">
+        <div class="schedule-pill is-accent">
+          <div>
+            <div class="schedule-date">05/07</div>
+            <div class="schedule-topic">思考能力 · AI 对话</div>
+          </div>
+          <div class="schedule-note">条形马<br>周四 20:00</div>
+        </div>
+        <div class="schedule-pill">
+          <div>
+            <div class="schedule-date">05/09</div>
+            <div class="schedule-topic">积累能力 · 知识库</div>
+          </div>
+          <div class="schedule-note">叁斤<br>周六 20:00</div>
+        </div>
+        <div class="schedule-pill">
+          <div>
+            <div class="schedule-date">05/12</div>
+            <div class="schedule-topic">表达能力 · 公众号图文 &amp; AI 视频</div>
+          </div>
+          <div class="schedule-note">sky盖哥<br>周二 20:00</div>
+        </div>
+        <div class="schedule-pill">
+          <div>
+            <div class="schedule-date">05/14</div>
+            <div class="schedule-topic">产品能力 · AI 编程</div>
+          </div>
+          <div class="schedule-note">刘小排<br>周四 20:00</div>
+        </div>
+        <div class="schedule-pill">
+          <div>
+            <div class="schedule-date">05/19</div>
+            <div class="schedule-topic">执行能力 · AI 工作流自动化</div>
+          </div>
+          <div class="schedule-note">钱塘江鲤<br>周二 20:00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:24px; font-size:20px;">
+      每一场都在帮你把“知道”变成“做到”，建议提前空出时间，跟着节奏一起推进
+    </div>
+  </div>
+
+  <div class="tool-side">
+    <div class="tool-side-head">
+      <strong>直播资料总览</strong>
+      <span>点击图片可放大查看</span>
+    </div>
+    <div class="tool-img-zone" onclick="zoomImg('img-coaches.png')" style="cursor:zoom-in; border-color:rgba(89,210,244,0.3); aspect-ratio:465 / 700;">
+      <img src="img-coaches.png" alt="高手领航直播排期" style="width:100%; height:auto; display:block; border-radius:18px;">
+    </div>
+    <div class="tool-side-caption">
+      <strong>LIVE SCHEDULE</strong>
+      <span>5 场直播主题、时间、嘉宾一图看完</span>
+    </div>
+  </div>
+</div>
+
+<!-- P9: 作业点评 -->
+<div class="slide center has-img-zone" id="s9">
+  <div class="content">
+    <div class="tag">TOOL 04 · 作业点评</div>
+    <h2>作业 & 点评</h2>
+    <div class="two-col" style="margin-top:36px;">
+      <div class="panel">
+        <h3>5 次作业</h3>
+        <p style="font-size:18px; line-height:2.2;">
+          对应五大能力模块，另有1个选修作业<br><br>
+          在<strong>作业墙</strong>提交作业<br>
+          也能看到其他船员的作业<br>
+          互相参考、互相学习
+        </p>
+      </div>
+      <div class="panel gold">
+        <h3 style="color:var(--accent-2);">2 次教练点评</h3>
+        <p style="font-size:18px; line-height:2.2;">
+          <strong style="color:var(--accent-2);">5月13日</strong> — 第一次点评<br>
+          <strong style="color:var(--accent-2);">5月21日</strong> — 第二次点评<br><br>
+          领队筛选优质作业 → 教练挑选点评<br>
+          <strong>及时提交，争取被看到</strong>
+        </p>
+      </div>
+    </div>
+    <div class="subtitle" style="margin-top:24px; font-size:16px;">
+      被点到 = 教练帮你看盲区，没点到 = 看别人的点评一样学到东西
+    </div>
+  </div>
+  <div class="tool-img-zone" id="tz-s9" onclick="document.getElementById('tz-inp-s9').click()">
+    <div class="tz-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+    <div class="tz-hint">点击上传截图</div>
+    <input type="file" id="tz-inp-s9" accept="image/*" style="display:none;" onchange="handleToolImg(this,'tz-s9')">
+    <img class="tz-preview" src="" alt="">
+  </div>
+</div>
+
+<!-- P10: 航海问答 & AI助手 -->
+<div class="slide center" id="s10">
+  <div class="content" style="width:min(1340px,100%); transform:translateY(-18px);">
+    <div class="tag">TOOL 05 · 航海问答</div>
+    <h2 class="free-edit is-draggable" contenteditable="true" spellcheck="false" style="margin-bottom:12px; font-size:46px;">航海问答主场景</h2>
+    <div class="subtitle free-edit is-draggable" contenteditable="true" spellcheck="false" style="max-width:920px; font-size:18px; line-height:1.55;">我们将群内的高价值实战问答，沉淀到了专属页面。大家可以直接在页面里提问、看答案，不用担心干货被聊天记录淹没。</div>
+    <div class="qa-scene-layout">
+      <div class="qa-device-card">
+        <div class="qa-device-head">
+          <div>
+            <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false">电脑端主页面</h3>
+            <p class="free-edit is-draggable" contenteditable="true" spellcheck="false">打开浏览器就能直接用</p>
+          </div>
+          <div class="qa-chip">DESKTOP</div>
+        </div>
+        <div class="qa-image-frame qa-desktop-frame" onclick="document.getElementById('qa-main-upload').click()">
+          <div class="qa-image-empty">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传电脑端截图</strong>
+            <span>点击上传</span>
+          </div>
+          <input type="file" id="qa-main-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'qa-main-preview')" onclick="event.stopPropagation()">
+          <img id="qa-main-preview" class="qa-image-preview" src="" alt="电脑端主页面" onclick="event.stopPropagation(); zoomImg(this.src);">
+        </div>
+      </div>
+      <div class="qa-device-card qa-phone-card">
+        <div class="qa-device-head" style="width:100%;">
+          <div>
+            <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false">手机端随时看</h3>
+            <p class="free-edit is-draggable" contenteditable="true" spellcheck="false">微信群内直接点开</p>
+          </div>
+          <div class="qa-chip">MOBILE</div>
+        </div>
+        <div class="qa-phone-shell">
+          <div class="qa-phone-notch"></div>
+          <div class="qa-image-frame is-phone" onclick="document.getElementById('qa-mobile-upload').click()">
+            <div class="qa-image-empty">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+              <strong>上传手机端截图</strong>
+              <span>点击上传</span>
+            </div>
+            <input type="file" id="qa-mobile-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'qa-mobile-preview')" onclick="event.stopPropagation()">
+            <img id="qa-mobile-preview" class="qa-image-preview" src="" alt="手机端示意图" onclick="event.stopPropagation(); zoomImg(this.src);">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box free-edit is-draggable" contenteditable="true" spellcheck="false" style="margin-top:16px; font-size:17px; padding:16px 22px;">
+      高价值问答都沉淀在这里，后面回看、追问、继续查都更方便。
+    </div>
+  </div>
+</div>
+
+<!-- P11: 问答动作 -->
+<div class="slide center" id="s11">
+  <div class="content" style="width:min(1340px,100%); transform:translateY(-18px);">
+    <div class="tag">TOOL 05 · 问答动作</div>
+    <h2 class="free-edit is-draggable" contenteditable="true" spellcheck="false" style="margin-bottom:12px; font-size:46px;">问 AI、订阅、关注、分享</h2>
+    <div class="qa-feature-grid">
+      <div class="qa-action-card">
+        <div class="qa-action-head">
+          <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false">问 AI 助手</h3>
+          <div class="qa-chip">AI</div>
+        </div>
+          <p class="free-edit is-draggable" contenteditable="true" spellcheck="false">卡住时直接提问，先拿到一个可执行答案。</p>
+        <div class="qa-image-frame is-side" onclick="document.getElementById('qa-ai-upload').click()">
+          <div class="qa-image-empty">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传截图</strong>
+            <span>点击上传</span>
+          </div>
+          <input type="file" id="qa-ai-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'qa-ai-preview')" onclick="event.stopPropagation()">
+          <img id="qa-ai-preview" class="qa-image-preview" src="" alt="AI问答助手" onclick="event.stopPropagation(); zoomImg(this.src);">
+        </div>
+      </div>
+      <div class="qa-action-card">
+        <div class="qa-action-head">
+          <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false">订阅问题</h3>
+          <div class="qa-chip">FOLLOW UP</div>
+        </div>
+          <p class="free-edit is-draggable" contenteditable="true" spellcheck="false">有新回答会提醒，适合追长期问题。</p>
+        <div class="qa-image-frame is-side" onclick="document.getElementById('qa-sub-upload').click()">
+          <div class="qa-image-empty">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传截图</strong>
+            <span>点击上传</span>
+          </div>
+          <input type="file" id="qa-sub-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'qa-sub-preview')" onclick="event.stopPropagation()">
+          <img id="qa-sub-preview" class="qa-image-preview" src="" alt="订阅问题" onclick="event.stopPropagation(); zoomImg(this.src);">
+        </div>
+      </div>
+      <div class="qa-action-card">
+        <div class="qa-action-head">
+          <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false">关注船员</h3>
+          <div class="qa-chip">PEOPLE</div>
+        </div>
+          <p class="free-edit is-draggable" contenteditable="true" spellcheck="false">持续看到他的提问和回答，慢慢建立自己的信息筛选器。</p>
+        <div class="qa-image-frame is-side" onclick="document.getElementById('qa-follow-upload').click()">
+          <div class="qa-image-empty">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传截图</strong>
+            <span>点击上传</span>
+          </div>
+          <input type="file" id="qa-follow-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'qa-follow-preview')" onclick="event.stopPropagation()">
+          <img id="qa-follow-preview" class="qa-image-preview" src="" alt="关注船员" onclick="event.stopPropagation(); zoomImg(this.src);">
+        </div>
+      </div>
+      <div class="qa-action-card">
+        <div class="qa-action-head">
+          <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false">一键分享</h3>
+          <div class="qa-chip">SHARE</div>
+        </div>
+          <p class="free-edit is-draggable" contenteditable="true" spellcheck="false">遇到特别受用的"神提问"或"神回复"，支持直接一键分享给航海搭子，或者转到朋友圈。越分享越幸运，顺手的一次利他，可能帮你链接到同频的贵人。</p>
+        <div class="qa-image-frame is-side" onclick="document.getElementById('qa-share-upload').click()">
+          <div class="qa-image-empty">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传分享示意图</strong>
+            <span>一键分享的截图</span>
+          </div>
+          <input type="file" id="qa-share-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'qa-share-preview')" onclick="event.stopPropagation()">
+          <img id="qa-share-preview" class="qa-image-preview" src="" alt="一键分享" onclick="event.stopPropagation(); zoomImg(this.src);">
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box free-edit is-draggable" contenteditable="true" spellcheck="false" style="margin-top:16px; font-size:17px; padding:16px 22px;">
+      不会的问题先问，值得追的问题就订阅，靠谱的人就关注。
+    </div>
+  </div>
+</div>
+
+<!-- P12: 航海群聊 -->
+<div class="slide center" id="s12">
+  <div class="content" style="width:min(1360px,100%); transform:translateY(-14px);">
+    <div class="tag">TOOL 06 · 航海群聊</div>
+    <h2 class="free-edit is-draggable" contenteditable="true" spellcheck="false" style="margin-bottom:12px; font-size:48px;">两个群，各司其职</h2>
+    <div class="subtitle free-edit is-draggable" contenteditable="true" spellcheck="false" style="max-width:900px; font-size:18px; line-height:1.55;">一个负责交流，一个负责通知。先记住分工，再看截图就会更清楚。</div>
+
+    <div class="two-col" style="margin-top:22px; gap:24px; align-items:stretch;">
+      <div class="panel" style="padding:22px 22px 18px; display:flex; flex-direction:column; gap:14px; text-align:left;">
+        <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false" style="color:var(--accent); font-size:28px; margin-bottom:0;">航海交流群</h3>
+        <p class="free-edit is-draggable" contenteditable="true" spellcheck="false" style="font-size:17px; line-height:1.9; color:var(--muted); margin:0;">
+          自由交流的主战场。<br>
+          提问、反馈、分享进展都在这里。<br>
+          平时最常看的是这个群。
+        </p>
+      </div>
+
+      <div class="panel gold" style="padding:22px 22px 18px; display:flex; flex-direction:column; gap:14px; text-align:left;">
+        <h3 class="free-edit is-draggable" contenteditable="true" spellcheck="false" style="color:var(--accent-2); font-size:28px; margin-bottom:0;">禁言通知群</h3>
+        <p class="free-edit is-draggable" contenteditable="true" spellcheck="false" style="font-size:17px; line-height:1.9; color:var(--muted); margin:0;">
+          重要信息同步。<br>
+          活动安排、节奏提醒集中看这里。<br>
+          忙的时候优先盯这个群。
+        </p>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:12px; gap:24px; align-items:stretch;">
+      <div class="qa-image-frame" style="min-height:330px;" onclick="document.getElementById('group-chat-upload').click()">
+          <div class="qa-image-empty">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传航海交流群截图</strong>
+            <span>上传后点击图片可放大查看</span>
+          </div>
+          <input type="file" id="group-chat-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'group-chat-preview')" onclick="event.stopPropagation()">
+          <img id="group-chat-preview" class="qa-image-preview" src="" alt="航海交流群截图" style="min-height:330px;" onclick="event.stopPropagation(); zoomImg(this.src);">
+      </div>
+
+      <div class="qa-image-frame" style="min-height:330px;" onclick="document.getElementById('notice-group-upload').click()">
+          <div class="qa-image-empty">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传禁言通知群截图</strong>
+            <span>上传后点击图片可放大查看</span>
+          </div>
+          <input type="file" id="notice-group-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'notice-group-preview')" onclick="event.stopPropagation()">
+          <img id="notice-group-preview" class="qa-image-preview" src="" alt="禁言通知群截图" style="min-height:330px;" onclick="event.stopPropagation(); zoomImg(this.src);">
+      </div>
+    </div>
+
+    <div class="highlight-box free-edit is-draggable" contenteditable="true" spellcheck="false" style="margin-top:16px; font-size:18px; padding:16px 22px;">
+      两个群都要置顶：交流看交流群，通知看禁言群。
+    </div>
+  </div>
+</div>
+
+<!-- P13: 航海公约 -->
+<div class="slide center has-img-zone" id="s13">
+  <div class="content">
+    <div class="tag">RULES · 航海公约</div>
+    <h2>航海公约</h2>
+    <div class="subtitle" style="max-width:900px; font-size:18px; line-height:1.65; margin-bottom:4px;">先记住最重要的几条规则，右侧这张图可以作为完整公约海报在讲的时候随时放大查看。</div>
+    <div class="rule-list" style="margin-top:24px;">
+      <div class="rule-item">
+        <div class="num">1</div>
+        <div class="rule-text">完成不少于 <strong>3 篇</strong>航行作业，不水作业</div>
+      </div>
+      <div class="rule-item">
+        <div class="num">2</div>
+        <div class="rule-text">主动学习、行动、交流，<strong>#举手提问</strong></div>
+      </div>
+      <div class="rule-item">
+        <div class="num">3</div>
+        <div class="rule-text">尊重同行的船友、教练、志愿者、领队、生财团队</div>
+      </div>
+      <div class="rule-item">
+        <div class="num">4</div>
+        <div class="rule-text">力所能及地<strong>帮助他人</strong></div>
+      </div>
+      <div class="rule-item">
+        <div class="num">5</div>
+        <div class="rule-text">与他人建立有效链接，<strong style="color:var(--danger);">禁止批量暴力加好友</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-shot" style="width:340px;">
+    <div class="cover-shot-notch"></div>
+    <div class="qa-image-frame is-phone" onclick="document.getElementById('convention-poster-upload').click()">
+      <div class="qa-image-empty">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+        <strong>上传航海公约图</strong>
+        <span>上传后点击图片可放大查看</span>
+      </div>
+      <input type="file" id="convention-poster-upload" accept="image/*" style="display:none;" onchange="handleQaImage(this,'convention-poster-preview')" onclick="event.stopPropagation()">
+      <img id="convention-poster-preview" class="qa-image-preview" src="" alt="航海公约海报" onclick="event.stopPropagation(); zoomImg(this.src);">
+    </div>
+  </div>
+</div>
+
+<!-- P14: 保证金 & 群规 -->
+<div class="slide center" id="s14">
+  <div class="content">
+    <div class="tag">RULES · 重点</div>
+    <h2>保证金 & 群规</h2>
+    <div class="two-col" style="margin-top:36px;">
+      <div class="panel gold">
+        <h3 style="color:var(--accent-2);">保证金退还</h3>
+        <p style="font-size:19px; line-height:2.2;">
+          14天航海，<strong>5 次作业</strong><br>
+          提交 <strong style="color:var(--accent-2);">3 次及以上有效作业</strong> → 退保证金<br>
+          航海结束后 7 个工作日内退款<br><br>
+          <strong>有效 =</strong> 认真写的、跟项目相关的、有自己思考的<br>
+          <strong style="color:var(--danger);">无效 =</strong> 应付的、复制的、和项目毫无关系的
+        </p>
+      </div>
+      <div class="panel danger">
+        <h3 style="color:var(--danger);">群规红线</h3>
+        <p style="font-size:19px; line-height:2.2;">
+          不发外链、不引流、不打广告、不乱加人<br><br>
+          <strong>首次违反：</strong>移出群聊 → 提醒 → 再邀回<br>
+          <strong style="color:var(--danger);">二次违反：</strong>移出航海群、进冷静区<br>
+          后续不能再参与航海活动
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P15: 结束页 -->
+<div class="slide center closing" id="s15">
+  <div class="content">
+    <div class="tag">LET'S GO</div>
+    <h1 style="font-size:64px; line-height:1.3;">
+      不用完美<br><span class="accent closing-type">动起来就行</span>
+    </h1>
+    <div class="subtitle" style="margin-top:24px; font-size:22px; color:#7f98ad;">
+      很多时候我们不是缺机会，是缺一次认真投入的经历<br>
+      希望这次航海，能成为你在 AI 这件事上真正迈出去的那一步
+    </div>
+    <div class="closing-mark">
+      祝大家航海顺利，我们一起加油
+    </div>
+  </div>
+</div>
+
+<!-- P16: 联系我 -->
+<div class="slide center" id="s16">
+  <div class="content" style="width:min(1180px,100%);">
+    <div class="tag">SUPPORT · CONTACT</div>
+    <h2 style="margin-bottom:14px;">航海期间有问题，<span class="accent">随时来找我</span></h2>
+    <div class="subtitle" style="margin-bottom:0;">
+      不管是卡住了、想确认方向，还是有建议想提，都欢迎直接来聊
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-copy">
+        <div class="contact-profile">
+          <div class="contact-avatar-wrap" onclick="document.getElementById('contact-avatar-upload').click()">
+            <div class="contact-avatar-empty">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <input type="file" id="contact-avatar-upload" accept="image/*" style="display:none;" onchange="handleSimpleImage(this,'contact-avatar-preview','contact-avatar-empty')">
+            <img id="contact-avatar-preview" src="" alt="头像" style="display:none;">
+          </div>
+          <div>
+            <div contenteditable="true" spellcheck="false" class="contact-name">雪雪</div>
+            <div contenteditable="true" spellcheck="false" class="contact-role">航海运营</div>
+          </div>
+        </div>
+
+        <div class="contact-points">
+          <div class="contact-point">
+            <strong>遇到问题</strong>
+            不确定下一步怎么做，或者卡在某个环节，直接来问我。
+          </div>
+          <div class="contact-point">
+            <strong>想提建议</strong>
+            对节奏、资料、互动方式有想法，也欢迎随时告诉我。
+          </div>
+          <div class="contact-point">
+            <strong>不需要客气</strong>
+            能帮你少走一点弯路，就是这页存在的意义。
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-qr-panel">
+        <div class="contact-qr-frame" onclick="document.getElementById('contact-qr-upload').click()">
+          <div id="contact-qr-empty" class="contact-qr-empty">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 5v14M5 12h14"/></svg>
+            <strong>上传个人二维码</strong>
+            <span>建议使用清晰的微信码图片</span>
+          </div>
+          <input type="file" id="contact-qr-upload" accept="image/*" style="display:none;" onchange="handleSimpleImage(this,'contact-qr-preview','contact-qr-empty')">
+          <img id="contact-qr-preview" src="" alt="个人二维码" style="display:none;" onclick="event.stopPropagation(); zoomImg(this.src);">
+        </div>
+        <div contenteditable="true" spellcheck="false" class="contact-qr-caption">扫码添加我，航海期间有任何问题或建议，都可以随时来找我。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P17: 条形马老师介绍 -->
+<div class="slide center" id="s17">
+  <div class="content" style="width:min(1200px,100%);">
+    <div class="tag">PART 02 · 嘉宾介绍</div>
+    <h2 style="margin-bottom:0;">接下来，有请<span class="accent" contenteditable="true" spellcheck="false">条形马</span>老师</h2>
+
+    <div style="display:flex; align-items:center; justify-content:center; gap:0; margin-top:36px;">
+
+      <!-- 左：大图主体 -->
+      <div style="flex-shrink:0; width:clamp(320px, 36vw, 440px); position:relative; z-index:1;">
+        <div class="qa-image-frame" style="aspect-ratio:3/4; border-radius:22px; border-color:rgba(241,189,103,0.28); background:linear-gradient(180deg, rgba(42,33,16,0.3) 0%, rgba(7,18,34,0.5) 100%); box-shadow:0 30px 70px rgba(0,0,0,0.4), 0 0 40px rgba(241,189,103,0.08);" onclick="zoomImg('img-coach-tiaoxingma.jpg')">
+          <input type="file" id="coach-intro-upload" accept="image/*" style="display:none;" onchange="handleCoachImg(this,'coach-intro-preview')" onclick="event.stopPropagation()">
+          <img id="coach-intro-preview" class="qa-image-preview" src="img-coach-tiaoxingma.jpg" alt="条形马老师" style="display:block; object-fit:cover; height:100%;" onclick="event.stopPropagation(); zoomImg(this.src);">
+        </div>
+      </div>
+
+      <!-- 右：信息浮层 -->
+      <div style="flex:1; min-width:0; margin-left:-24px; padding-left:48px; display:flex; flex-direction:column; justify-content:center; gap:20px;">
+        <!-- 嘉宾名 -->
+        <div contenteditable="true" spellcheck="false" style="font-size:36px; font-weight:900; color:var(--ink); line-height:1.3; outline:none;">条形马</div>
+        <!-- title -->
+        <div contenteditable="true" spellcheck="false" style="font-size:17px; color:var(--soft); line-height:1.7; outline:none;">出海产品创业者 · 社群研究者</div>
+        <!-- 分隔线 -->
+        <div style="width:48px; height:2px; background:linear-gradient(90deg, var(--accent-2), transparent); border-radius:2px;"></div>
+        <!-- 直播主题 -->
+        <div>
+          <div style="font-size:12px; color:var(--accent-2); font-weight:700; letter-spacing:0.18em; margin-bottom:8px;">本场直播主题</div>
+          <div contenteditable="true" spellcheck="false" style="font-size:28px; font-weight:900; color:var(--ink); line-height:1.35; outline:none;">思考能力：<span style="color:var(--accent-2);">AI 对话</span></div>
+        </div>
+        <!-- 一句话说明 -->
+        <div contenteditable="true" spellcheck="false" style="font-size:16px; color:var(--muted); line-height:1.8; outline:none;">这是这次航海比较核心的内容，一定要留下来听</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 特效样式 -->
+<style>
+  /* 翻页光扫效果 */
+  .slide.active::after {
+    animation: sweepLight 1.2s ease-out both;
+  }
+  @keyframes sweepLight {
+    0% { opacity: 0; transform: translateX(-100%); }
+    30% { opacity: 1; }
+    100% { opacity: 0.9; transform: translateX(0); }
+  }
+
+  /* s16 条形马图片框呼吸光 */
+  @keyframes frameGlow {
+    0%, 100% { box-shadow: 0 30px 70px rgba(0,0,0,0.4), 0 0 30px rgba(241,189,103,0.06); border-color: rgba(241,189,103,0.22); }
+    50% { box-shadow: 0 30px 70px rgba(0,0,0,0.4), 0 0 50px rgba(241,189,103,0.14); border-color: rgba(241,189,103,0.38); }
+  }
+  #s17 .qa-image-frame {
+    animation: frameGlow 3.5s ease-in-out infinite;
+  }
+
+  .contact-card {
+    margin-top: 34px;
+    padding: 28px;
+    border-radius: 28px;
+    border: 1px solid rgba(89,210,244,0.18);
+    background:
+      radial-gradient(circle at top right, rgba(89,210,244,0.12), transparent 26%),
+      linear-gradient(180deg, rgba(10,24,45,0.86) 0%, rgba(7,18,34,0.74) 100%);
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 28px;
+    align-items: stretch;
+    text-align: left;
+  }
+  .contact-copy {
+    padding: 8px 8px 8px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+  .contact-profile {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .contact-avatar-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 26px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    border: 1px solid rgba(89,210,244,0.22);
+    background: rgba(255,255,255,0.04);
+    cursor: pointer;
+  }
+  .contact-avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .contact-avatar-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(89,210,244,0.55);
+    background: linear-gradient(180deg, rgba(12,27,49,0.66) 0%, rgba(7,18,34,0.82) 100%);
+  }
+  .contact-name {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.1;
+    outline: none;
+  }
+  .contact-role {
+    margin-top: 8px;
+    font-size: 16px;
+    color: var(--soft);
+    line-height: 1.6;
+    outline: none;
+  }
+  .contact-points {
+    display: grid;
+    gap: 14px;
+  }
+  .contact-point {
+    padding: 16px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(89,210,244,0.12);
+    background: rgba(255,255,255,0.04);
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .contact-point strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .contact-qr-panel {
+    padding: 22px;
+    border-radius: 24px;
+    border: 1px solid rgba(241,189,103,0.16);
+    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+  }
+  .contact-qr-frame {
+    width: min(100%, 420px);
+    aspect-ratio: 1 / 1;
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff;
+    box-shadow: 0 24px 54px rgba(0,0,0,0.22);
+    cursor: pointer;
+  }
+  .contact-qr-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #ffffff;
+  }
+  .contact-qr-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #47637f;
+    text-align: center;
+    background:
+      linear-gradient(135deg, rgba(89,210,244,0.08), rgba(241,189,103,0.08)),
+      #ffffff;
+  }
+  .contact-qr-empty strong {
+    font-size: 20px;
+    color: #203247;
+  }
+  .contact-qr-empty span {
+    font-size: 14px;
+    color: #5c7188;
+  }
+  .contact-qr-caption {
+    max-width: 420px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    text-align: center;
+    outline: none;
+  }
+
+  /* s15 结束页打字机效果 */
+  @keyframes typeReveal {
+    from { max-width: 0; }
+    to { max-width: 100%; }
+  }
+  #s15.active .closing-type {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typeReveal 1.5s steps(12) 0.6s both;
+    border-right: 3px solid var(--accent);
+  }
+  @keyframes cursorBlink {
+    0%, 100% { border-color: var(--accent); }
+    50% { border-color: transparent; }
+  }
+  #s15.active .closing-type {
+    animation: typeReveal 1.5s steps(12) 0.6s both, cursorBlink 0.8s step-end 2.1s infinite;
+  }
+</style>
+
+<!-- Page indicator -->
+<div class="page-ind" id="pageInd">1 / 17</div>
+
+<script>
+// 拖拽滚动
+let _drag = null;
+function startDrag(e, el) {
+  _drag = { el, x: e.pageX, sl: el.scrollLeft, moved: false };
+  el.style.cursor = 'grabbing';
+  const onMove = ev => {
+    if (!_drag) return;
+    const dx = ev.pageX - _drag.x;
+    if (Math.abs(dx) > 4) _drag.moved = true;
+    _drag.el.scrollLeft = _drag.sl - dx;
+  };
+  const onUp = () => {
+    if (_drag) _drag.el.style.cursor = 'grab';
+    _drag = null;
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+  };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+function startDragY(e, el) {
+  _drag = { el, y: e.pageY, st: el.scrollTop, moved: false };
+  el.style.cursor = 'grabbing';
+  const onMove = ev => {
+    if (!_drag) return;
+    const dy = ev.pageY - _drag.y;
+    if (Math.abs(dy) > 4) _drag.moved = true;
+    _drag.el.scrollTop = _drag.st - dy;
+  };
+  const onUp = () => {
+    if (_drag) _drag.el.style.cursor = 'grab';
+    _drag = null;
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+  };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+function zoomImg(src) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out;backdrop-filter:blur(6px);';
+  overlay.onclick = () => overlay.remove();
+  document.addEventListener('keydown', function esc(e) {
+    if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', esc); }
+  });
+  const img = document.createElement('img');
+  img.src = src;
+  img.style.cssText = 'max-width:88vw;max-height:88vh;border-radius:14px;object-fit:contain;box-shadow:0 0 80px rgba(0,0,0,0.6);';
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+}
+function handleToolImg(input, zoneId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const zone = document.getElementById(zoneId);
+    const preview = zone.querySelector('.tz-preview');
+    preview.src = e.target.result;
+    preview.style.display = 'block';
+    zone.querySelector('.tz-icon').style.display = 'none';
+    zone.querySelector('.tz-hint').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+function handleQaImage(input, imgId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = document.getElementById(imgId);
+    const frame = img.closest('.qa-image-frame');
+    img.onload = function() {
+      img.classList.remove('is-landscape', 'is-portrait');
+      if (img.naturalWidth >= img.naturalHeight) {
+        img.classList.add('is-landscape');
+      } else {
+        img.classList.add('is-portrait');
+      }
+      autoFitQaSlides();
+    };
+    img.src = e.target.result;
+    img.style.display = 'block';
+    const empty = frame.querySelector('.qa-image-empty');
+    if (empty) empty.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+function handleCoachImg(input, imgId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = document.getElementById(imgId);
+    const frame = img.closest('.qa-image-frame');
+    img.src = e.target.result;
+    img.style.display = 'block';
+    img.style.objectFit = 'cover';
+    img.style.height = '100%';
+    const empty = frame.querySelector('.qa-image-empty');
+    if (empty) empty.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+function handleAvatar(input, imgId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = document.getElementById(imgId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    img.parentElement.querySelector('label').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+function handleSimpleImage(input, imgId, emptyId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = document.getElementById(imgId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    const empty = document.getElementById(emptyId);
+    if (empty) empty.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+let _textDrag = null;
+function setQaFrameHeight(selector, px) {
+  document.querySelectorAll(selector).forEach(el => {
+    el.style.minHeight = px + 'px';
+    if (el.classList.contains('qa-image-frame')) {
+      const preview = el.querySelector('.qa-image-preview');
+      if (preview) preview.style.minHeight = px + 'px';
+    } else if (el.classList.contains('qa-image-preview')) {
+      el.style.minHeight = px + 'px';
+    }
+  });
+}
+function autoFitQaSlides() {
+  const vh = window.innerHeight || 900;
+  const s10 = document.getElementById('s10');
+  if (s10) {
+    const desktop = s10.querySelector('.qa-desktop-frame');
+    const desktopImg = s10.querySelector('#qa-main-preview');
+    const phoneFrame = s10.querySelector('.qa-phone-shell .qa-image-frame');
+    const phoneImg = s10.querySelector('#qa-mobile-preview');
+
+    let desktopHeight = Math.round(vh * 0.42);
+    if (desktopImg && desktopImg.style.display === 'block' && desktopImg.naturalWidth && desktopImg.naturalHeight) {
+      const ratio = desktopImg.naturalWidth / desktopImg.naturalHeight;
+      if (ratio > 1.45) desktopHeight = Math.round(vh * 0.38);
+      if (ratio < 0.95) desktopHeight = Math.round(vh * 0.46);
+    }
+    desktopHeight = Math.max(320, Math.min(desktopHeight, 430));
+    if (desktop) setQaFrameHeight('#s10 .qa-desktop-frame', desktopHeight);
+
+    let phoneHeight = Math.round(vh * 0.36);
+    if (phoneImg && phoneImg.style.display === 'block' && phoneImg.naturalWidth && phoneImg.naturalHeight) {
+      const ratio = phoneImg.naturalWidth / phoneImg.naturalHeight;
+      if (ratio > 0.8) phoneHeight = Math.round(vh * 0.32);
+      if (ratio < 0.58) phoneHeight = Math.round(vh * 0.38);
+    }
+    phoneHeight = Math.max(280, Math.min(phoneHeight, 380));
+    if (phoneFrame) {
+      phoneFrame.style.minHeight = phoneHeight + 'px';
+      if (phoneImg) phoneImg.style.minHeight = phoneHeight + 'px';
+    }
+  }
+
+  const s11 = document.getElementById('s11');
+  if (s11) {
+    const frames = s11.querySelectorAll('.qa-image-frame.is-side');
+    frames.forEach(frame => {
+      const img = frame.querySelector('.qa-image-preview');
+      let sideHeight = Math.round(vh * 0.18);
+      if (img && img.style.display === 'block' && img.naturalWidth && img.naturalHeight) {
+        const ratio = img.naturalWidth / img.naturalHeight;
+        if (ratio > 1.35) sideHeight = Math.round(vh * 0.16);
+        if (ratio < 0.9) sideHeight = Math.round(vh * 0.2);
+      }
+      sideHeight = Math.max(150, Math.min(sideHeight, 220));
+      frame.style.minHeight = sideHeight + 'px';
+      if (img) img.style.minHeight = sideHeight + 'px';
+    });
+  }
+}
+function initFreeEditDrag() {
+  document.querySelectorAll('.free-edit.is-draggable').forEach(el => {
+    el.addEventListener('mousedown', e => {
+      if (!e.shiftKey) return;
+      if (e.target.closest('input, textarea')) return;
+      e.preventDefault();
+      const startX = e.clientX;
+      const startY = e.clientY;
+      const currentX = parseFloat(el.dataset.x || '0');
+      const currentY = parseFloat(el.dataset.y || '0');
+      _textDrag = { el, startX, startY, currentX, currentY };
+      el.classList.add('dragging');
+      el.style.setProperty('--tx', currentX + 'px');
+      el.style.setProperty('--ty', currentY + 'px');
+    });
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!_textDrag) return;
+    const dx = e.clientX - _textDrag.startX;
+    const dy = e.clientY - _textDrag.startY;
+    const nextX = _textDrag.currentX + dx;
+    const nextY = _textDrag.currentY + dy;
+    _textDrag.el.dataset.x = nextX;
+    _textDrag.el.dataset.y = nextY;
+    _textDrag.el.style.setProperty('--tx', nextX + 'px');
+    _textDrag.el.style.setProperty('--ty', nextY + 'px');
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!_textDrag) return;
+    _textDrag.el.classList.remove('dragging');
+    _textDrag = null;
+  });
+}
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let cur = 0;
+  const ind = document.getElementById('pageInd');
+  initFreeEditDrag();
+  autoFitQaSlides();
+  window.addEventListener('resize', autoFitQaSlides);
+
+  // Check hash on load
+  const hash = location.hash.match(/^#s(\d+)$/);
+  if (hash) {
+    const idx = parseInt(hash[1]) - 1;
+    if (idx >= 0 && idx < total) cur = idx;
+  }
+
+  function go(n) {
+    if (n < 0 || n >= total || n === cur) return;
+    slides[cur].classList.add('fade-out');
+    slides[cur].classList.remove('active');
+    setTimeout(() => { slides[cur].classList.remove('fade-out'); cur = n; show(); }, 100);
+  }
+  function show() {
+    slides.forEach(s => { s.classList.remove('active','fade-out'); });
+    slides[cur].classList.add('active');
+    ind.textContent = (cur+1) + ' / ' + total;
+    location.hash = 's' + (cur+1);
+  }
+  show();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(cur+1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(cur-1); }
+    if (e.key === 'Home') { e.preventDefault(); go(0); }
+    if (e.key === 'End') { e.preventDefault(); go(total-1); }
+  });
+
+  let touchY = 0;
+  document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; });
+  document.addEventListener('touchend', e => {
+    const dy = touchY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > 40) dy > 0 ? go(cur+1) : go(cur-1);
+  });
+
+  // 翻页改为键盘方向键，不再用点击区域
+})();
+</script>
+
+</body>
+</html>
